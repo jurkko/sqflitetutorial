@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflitetutorial/data/database_operations.dart';
+import 'package:sqflitetutorial/models/contact.dart';
 
 class AddContactPage extends StatefulWidget {
   AddContactPage({Key key}) : super(key: key);
@@ -11,7 +13,7 @@ class AddContactPage extends StatefulWidget {
 class _AddContactPageState extends State<AddContactPage> {
   final _nameController = TextEditingController();
   final _surnameController = TextEditingController();
-
+  ContactOperations contactOperations = ContactOperations();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +52,14 @@ class _AddContactPageState extends State<AddContactPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final contact = Contact(
+            name: _nameController.text,
+            surname: _surnameController.text
+          );
+
+          contactOperations.createContact(contact);
+        },
         child: Icon(Icons.add),
       ),
     );

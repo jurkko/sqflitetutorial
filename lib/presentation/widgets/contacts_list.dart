@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflitetutorial/data/database_operations.dart';
 import 'package:sqflitetutorial/models/contact.dart';
 import 'package:sqflitetutorial/presentation/pages/edit_contact.dart';
 
@@ -7,6 +8,7 @@ class ContactsList extends StatelessWidget {
   List<Contact> contacts;
 
   ContactsList(List<Contact> this.contacts, {Key key}) : super(key: key);
+  ContactOperations contactOperations = ContactOperations();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,9 @@ class ContactsList extends StatelessWidget {
                     ),
                   )),
             ),
-            onDismissed: (direction) {},
+            onDismissed: (direction) {
+              contactOperations.deleteContact(contacts[index]);
+            },
           );
         },
       ),

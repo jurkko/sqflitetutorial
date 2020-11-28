@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflitetutorial/data/database_operations.dart';
 import 'package:sqflitetutorial/models/contact.dart';
 
 class EditContactPage extends StatefulWidget {
@@ -18,8 +19,12 @@ class _EditContactPageState extends State<EditContactPage> {
   var _nameController = TextEditingController();
   var _surnameController = TextEditingController();
 
+  ContactOperations contactOperations = ContactOperations();
   @override
   Widget build(BuildContext context) {
+    _nameController.text = widget.contact.name;
+    _surnameController.text = widget.contact.surname;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('SQFLite Tutorial'),
@@ -52,14 +57,19 @@ class _EditContactPageState extends State<EditContactPage> {
                   decoration: InputDecoration(
                       border: OutlineInputBorder(), labelText: 'Surname'),
                 ),
-              ),
+              ),g
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.edit),
-        onPressed: () {},
+        onPressed: () {
+          widget.contact.name = _nameController.text;
+          widget.contact.surname = _surnameController.text;
+
+          contactOperations.updateContact(widget.contact);
+        },
       ),
     );
   }
